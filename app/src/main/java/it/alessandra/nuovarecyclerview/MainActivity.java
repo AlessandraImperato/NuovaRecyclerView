@@ -4,6 +4,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.Button;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
     private List<Dipendente> dipendenti;
+    Button aggiungi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,15 +23,25 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         dipendenti = init();
+        final Dipendente nuovo = new Dipendente("Francesca","Grasso",88);
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerv);
-
+        aggiungi = (Button) findViewById(R.id.bnome);
 
         linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
 
         final MyAdapter myAdapter = new MyAdapter(dipendenti,getApplicationContext());
         recyclerView.setAdapter(myAdapter);
+
+        aggiungi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dipendenti.add(nuovo);
+                myAdapter.notifyDataSetChanged();
+            }
+        });
+
 
 
     }
